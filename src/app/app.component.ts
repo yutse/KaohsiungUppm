@@ -1,5 +1,5 @@
 import {
-    Component, ElementRef, ViewChild, OnInit, OnChanges, NgZone
+    Component, ElementRef, ViewChild, OnInit,  NgZone
 } from '@angular/core';
 // import { SebmGoogleMap, SebmGoogleMapPolygon, LatLngLiteral } from 'angular2-google-maps/core';
 import { Http, Response } from '@angular/http';
@@ -17,7 +17,7 @@ declare var TGOS: any;
     styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit  {
-    title: string = '高雄樁位';
+    title = '高雄樁位';
     list1: any[] = [];
     listQuery: any[] = [];
     list2: Observable<any>;
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit  {
     selectedRow: Number;
     clickMessageBox: any;
     items: any;
-    UppmNameQ: string = '';
+    UppmNameQ = '';
     TypeSelectValue: string[] = []; // Array of strings for multi select, string for single select.
     TypeOptions: Array<any> = [
         { value: '界樁', label: '界樁' },
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit  {
         { value: '鐵蓋', label: '鐵蓋' },
     ];
     marker: any;
-    url: string = 'http://localhost:5000/api/values';
+    url = '/api';
     InfoWindowOptions = {
         opacity: 0.8,
         maxWidth: 700,         // 訊息視窗的最大寬度
@@ -61,13 +61,14 @@ export class AppComponent implements OnInit  {
         // this.r
         console.clear();
         console.log('onInit');
+        this.MapDataSubscribe(true);
     }
 
     MapDataSubscribe(isLoadMap = false) {
         let aa = this.http.get(this.url).subscribe(
             obj => {
                 this.list1 = (obj.json() as any[]).filter(
-                    (x: any) => (x.UppmName as string).includes(this.UppmNameQ) &&
+                    (x: any) =>  (x.UppmName as string) !== undefined && (x.UppmName as string).includes(this.UppmNameQ) &&
                         (this.TypeSelectValue.length === 0 || this.TypeSelectValue.indexOf(x.Type as string) !== -1) &&
                         (this.InspectSelectValue.length === 0 || this.InspectSelectValue.indexOf(x.Inspect as string) !== -1)
                 );
@@ -86,16 +87,6 @@ export class AppComponent implements OnInit  {
                     console.log(Date.now(), 'unsubscribe');
                 }, 0);
             });
-    }
-
-    ngAfterViewChecked() {
-    }
-
-    ngAfterContentInit() {
-    }
-
-    ngAfterContentChecked() {
-
     }
 
     get filteredAlbumList() {
