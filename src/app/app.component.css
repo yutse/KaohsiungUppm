@@ -1,0 +1,20 @@
+#TGMap {
+  height: 800px;
+  margin-left:10px;
+}
+
+tr.active {
+  background-color: lightgreen;
+}
+table {
+    margin-right: 5px
+}
+thead, tbody { 
+   display: block; }
+   thead{
+       padding-right: 17px;
+   }
+tbody{
+    overflow: auto ;
+    max-height: 715px;
+}

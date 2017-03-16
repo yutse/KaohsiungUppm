@@ -1,3 +1,51 @@
-<h1>
-  {{title}}
-</h1>
+<div style="display:block">
+  <h3 style="margin-top:2px;margin-bottom:4px" class="title" #selectElem>
+    {{title}} {{ clock | async}}
+  </h3>
+  <button>123</button>
+  <!--<input type="file" id="csvFileInput" (change)="handleFiles($event)" accept=".csv">-->
+  <div style="display: inline-block">
+    <div style="width:500px;float:left;">
+      都市計畫名稱查詢 : <input type="text" [(ngModel)]="UppmNameQ" />
+      <br> 埋樁時樁類查詢 :
+      <span style="width:300px;display:inline-block">
+    <ng-select [multiple]="true" [options]="TypeOptions" [(ngModel)]="TypeSelectValue">
+    </ng-select>
+</span>
+      <br> 巡查結果 :
+      <span style="width:300px;display:inline-block">
+    <ng-select [multiple]="true" [options]="InspectOptions" [(ngModel)]="InspectSelectValue">
+    </ng-select>
+</span>
+      <table style="width:100%;border-collapse: collapse;" border="1">
+        <thead>
+          <tr style="background-color: yellow">
+            <th style="width:10%;">識別碼</th>
+            <th style="width:56%;">都市計畫名稱</th>
+            <th style="width:12%;">埋樁時樁類</th>
+            <th style="width:12%;">巡查結果</th>
+            <th style="width:10%;">定位</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of list1  ;let i = index; let odd = odd;" [class.active]="i == selectedRow">
+            <td style="width:10%;text-align: center;">{{item.Id}}</td>
+            <td style="width:56%">{{item.UppmName}}</td>
+            <td style="width:12%">{{item.Type}}</td>
+            <td style="width:12%">{{item.Inspect}}</td>
+            <td style="width:10%;text-align: center;"><button (click)="selectedRow=i;eventHandler(item);">定位</button>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div [ngStyle]="{width: windows.width-500}" style="width: 735px;float:left;" id="TGMap">
+    </div>
+  </div>
+  <!--<div *ngFor="let item of list1">
+    <button>btn</button>
+  </div>-->
+  <div>
+    定位資料 : {{data | json}}
+  </div>
+
+</div>
